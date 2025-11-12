@@ -286,11 +286,6 @@
         <source src="Christina Perri - A Thousand Years (Piano Cover by Riyandi Kusuma).mp3" type="audio/mpeg">
     </audio>
 
-    <button id="musicBtn" onclick="toggleMusic()" 
-            class="fixed bottom-6 left-6 w-14 h-14 bg-gradient-to-r from-rose-400 to-pink-500 rounded-full shadow-2xl z-50 flex items-center justify-center text-2xl hover:scale-110 transition-transform">
-        🔊
-    </button>
-
     <div id="toast" class="hidden fixed top-6 right-6 bg-green-500 text-white px-6 py-3 rounded-lg shadow-xl z-50 animate-fadeIn">
         ✅ Nomor rekening berhasil disalin!
     </div>
@@ -309,29 +304,18 @@
 
         // Auto play music on load
         const bgMusic = document.getElementById('bgMusic');
-        const musicBtn = document.getElementById('musicBtn');
-        let isMusicPlaying = false;
+        let isMusicPlaying = false; // Tetap simpan statusnya
 
         window.addEventListener('load', () => {
+            // Coba putar otomatis
             bgMusic.play().then(() => {
                 isMusicPlaying = true;
-                musicBtn.textContent = '🔊';
             }).catch(() => {
-                musicBtn.textContent = '🔇';
+                isMusicPlaying = false; // Gagal (karena aturan browser)
             });
         });
 
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                musicBtn.textContent = '🔇';
-                isMusicPlaying = false;
-            } else {
-                bgMusic.play();
-                musicBtn.textContent = '🔊';
-                isMusicPlaying = true;
-            }
-        }
+        // FUNGSI toggleMusic() DIHAPUS KARENA TOMBOLNYA HILANG
 
         // Countdown Timer
         const weddingDate = new Date('2025-12-25T09:00:00').getTime();
@@ -371,14 +355,14 @@
         }
 
         // Enable music interaction on first click
+        // Ini PENTING agar musik bisa play di browser yang memblokir autoplay
         document.body.addEventListener('click', function enableMusic() {
             if (!isMusicPlaying) {
                 bgMusic.play().then(() => {
                     isMusicPlaying = true;
-                    musicBtn.textContent = '🔊';
                 }).catch(() => {});
             }
-        }, { once: true });
+        }, { once: true }); // 'once: true' berarti ini hanya berjalan satu kali
     </script>
 </body>
 </html>
